@@ -1,0 +1,20 @@
+# Ingest Pipeline for enriching IP and User Agent data
+PUT _ingest/pipeline/apm-geo
+{
+  "description": "Add geoip info",
+  "processors": [
+    {
+      "geoip": {
+        "field": "context.user.ip",
+        "target_field": "context.custom.geo",
+        "properties": ["location"],
+        "ignore_failure": true
+      }
+    }, {
+      "user_agent" : {
+        "field" : "context.user.user-agent",
+        "target_field": "context.custom.user_agent",
+        "ignore_failure": true
+      
+    }}]
+}

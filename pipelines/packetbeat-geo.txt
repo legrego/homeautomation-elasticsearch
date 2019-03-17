@@ -1,0 +1,29 @@
+# Ingest Pipeline for enriching IP data from Packetbeat
+PUT _ingest/pipeline/packetbeat-geo
+{
+  "description": "Add geoip info",
+  "processors": [
+    {
+      "geoip": {
+        "field": "client_ip",
+        "target_field": "client_geoip",
+        "properties": ["location"],
+        "ignore_failure": true
+      }
+    }, {
+      "geoip": {
+        "field": "source.ip",
+        "target_field": "source.geo",
+        "properties": ["location"],
+        "ignore_failure": true
+      }
+    }, {
+      "geoip": {
+        "field": "dest.ip",
+        "target_field": "dest.geo",
+        "properties": ["location"],
+        "ignore_failure": true
+      }
+    }
+  ]
+}
